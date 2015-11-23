@@ -1,0 +1,18 @@
+<div
+  class="stars"
+  data-ng-class="{ 'stars--disabled': vm.readOnly }"
+>
+
+  <div
+    class="stars__star"
+    data-ng-repeat="rating in vm.ratings track by $index"
+    data-ng-click="vm.ratingValue = rating.rating"
+  >
+    <span
+      class="icon"
+      data-ng-class="rating.checked ? 'ion-ios-star' : 'ion-ios-star-outline'"
+    ></span>
+
+  </div>
+
+</div>

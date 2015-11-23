@@ -1,0 +1,57 @@
+//
+//
+//
+// $ANGULAR_RATINGS
+//
+//
+// @author Benjamin Charity <ben@benjamincharity.com>
+//
+// @doc
+//  Base style for the angular ratings component
+// @end
+
+// <section> primary container
+.bpc-stars {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  // Class added when disabled
+  &--disabled {
+    pointer-events: none;
+  }
+
+  // individual star
+  &__star {
+    display: inline-block;
+
+    &.ng-click-active {
+      animation: pulseInvertLarge 200ms;
+    }
+
+    &-icon {
+      pointer-events: none;
+    }
+  }
+}
+
+
+
+$pulse_large_start_size: 1;
+$pulse_large_variation: .2;
+$pulse_invert_large_size: $pulse_large_start_size - $pulse_large_variation;
+
+@keyframes pulseInvertLarge {
+  0% {
+    transform: scale3d($pulse_large_start_size, $pulse_large_start_size, $pulse_large_start_size);
+  }
+
+  50% {
+    transform: scale3d($pulse_invert_large_size, $pulse_invert_large_size, $pulse_invert_large_size);
+  }
+
+  100% {
+    transform: scale3d($pulse_large_start_size, $pulse_large_start_size, $pulse_large_start_size);
+  }
+}
+

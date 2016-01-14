@@ -8,13 +8,7 @@ var angularTemplateCache = require('gulp-angular-templatecache');
 var minifyHTML = require('gulp-minify-html');
 var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
-
-
-function prepareTemplates() {
-    return gulp.src('./src/stars.html')
-        .pipe(minifyHTML())
-        .pipe(angularTemplateCache());
-}
+var rename = require('gulp-rename');
 
 
 /**
@@ -31,6 +25,10 @@ gulp.task('scripts', function() {
     .pipe(addStream.obj(prepareTemplates()))
     .pipe(ngAnnotate())
     .pipe(concat('angular-ratings.js'))
+    .pipe(gulp.dest(scriptsOutput))
+    .pipe(rename({
+        suffix: '.min',
+    }))
     .pipe(uglify())
     .pipe(gulp.dest(scriptsOutput));
 });
@@ -45,7 +43,7 @@ var stylesOutput = './dist';
 gulp.task('sass', function() {
     return gulp
         .src(stylesInput) // Find all `.scss` files from the `stylesheets/` folder
-        .pipe(sass()) // Run Sass on those files
+        .pipe(sass({outputStyle: 'compressed'})) // Run Sass on those files
         .pipe(autoprefixer()) // Auto-prefix styles
         .pipe(gulp.dest(stylesOutput)); // Write the resulting CSS in the output folder
 });
@@ -67,8 +65,25 @@ gulp.task('watch', function() {
 });
 
 
-/**
- * Default task
- */
-gulp.task('default', ['sass', 'scripts']);
 
+
+/**
+ * Build task
+ */
+gulp.task('build', ['sass', 'scripts']);
+
+
+/**
+ * Default task (simply calls build)
+ */
+gulp.task('default', ['build']);
+
+
+
+
+
+function prepareTemplates() {
+    return gulp.src('./src/stars.html')
+        .pipe(minifyHTML())
+        .pipe(angularTemplateCache());
+}

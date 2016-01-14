@@ -1,0 +1,35 @@
+{
+    "name": "angular.ratings",
+    "homepage": "https://github.com/benjamincharity/angular.ratings",
+    "authors": [
+        "Benjamin Charity <ben@benjamincharity.com>"
+    ],
+    "description": "A simple Angular directive to view or submit ratings.",
+    "keywords": [
+        "ratings",
+        "rating",
+        "rate",
+        "stars",
+        "star",
+        "feedback",
+        "angular",
+        "angularjs"
+    ],
+    "license": "MIT",
+    "main": [
+        "dist/angular-ratings.min.js",
+        "dist/angular-ratings.min.css"
+    ],
+    "dependencies": {
+        "angular": "~1.4.0"
+    },
+    "ignore": [
+        "**/.*",
+        "src",
+        "node_modules",
+        "package.json",
+        "webpack.config.js",
+        "gulpfile.js"
+    ]
+}
+

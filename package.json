@@ -1,7 +1,7 @@
 {
   "name": "angular-ratings",
   "version": "1.0.0",
-  "description": "An Angular directive to view or submit ratings.",
+  "description": "A simple Angular directive to view or submit ratings.",
   "main": "gulpfile.js",
   "dependencies": {
     "gulp-autoprefixer": "^3.1.0",
@@ -17,6 +17,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-minify-html": "^1.0.4",
     "gulp-ng-annotate": "^1.1.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.0",
     "gulp-uglify": "^1.5.1"
   },
@@ -33,7 +34,9 @@
     "rate",
     "stars",
     "star",
-    "feedback"
+    "feedback",
+    "angular",
+    "angularjs"
   ],
   "author": "Benjamin Charity <@benjamincharity>",
   "license": "ISC",

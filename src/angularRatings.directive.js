@@ -1,4 +1,4 @@
-function StarRatingDirective(
+export function StarRatingDirective(
 ) {
     'ngInject';
 
@@ -41,11 +41,9 @@ function StarRatingController(
     $scope
 ) {
 
-    const self = this;
-
     // If no ratings were passed in, build a default array
-    if (!self.ratings) {
-        self.ratings = [
+    if (!this.ratings) {
+        this.ratings = [
             {
                 rating: 1,
             },
@@ -64,14 +62,13 @@ function StarRatingController(
         ];
     }
 
-
     // Initialize stars with the passed in rating
-    updateStars(self.ratingValue);
+    updateStars(this.ratingValue);
 
     // Watch for rating changes
-    $scope.$watch('vm.ratingValue', function(newValue) {
+    $scope.$watch('vm.ratingValue', (newValue) => {
         if (newValue) {
-            updateStars(newValue);
+            updateStars.call(this, newValue);
         }
     });
 
@@ -83,7 +80,7 @@ function StarRatingController(
      */
     function updateStars(currentRating) {
 
-        _.forEach(self.ratings, function(rating) {
+        this.ratings.forEach((rating) => {
             if (rating.rating && rating.rating <= parseInt(currentRating, 10)) {
                 rating.checked = true;
             } else {
@@ -95,7 +92,4 @@ function StarRatingController(
 
 
 }
-
-
-export default StarRatingDirective;
 

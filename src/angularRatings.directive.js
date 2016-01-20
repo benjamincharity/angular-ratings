@@ -1,4 +1,5 @@
-export function StarRatingDirective(
+/* global require */
+export function AngularRatingsDirective(
 ) {
     'ngInject';
 
@@ -11,7 +12,7 @@ export function StarRatingDirective(
             ratings: '=?',
             readOnly: '=?',
         },
-        templateUrl: 'app/components/star-rating/stars.html',
+        templateUrl: require('./stars.html'),
         link: linkFunction,
         controller: StarRatingController,
         controllerAs: 'vm',
@@ -31,65 +32,67 @@ export function StarRatingDirective(
 
     }
 
-}
-
-
-/**
- * Controller
- */
-function StarRatingController(
-    $scope
-) {
-
-    // If no ratings were passed in, build a default array
-    if (!this.ratings) {
-        this.ratings = [
-            {
-                rating: 1,
-            },
-            {
-                rating: 2,
-            },
-            {
-                rating: 3,
-            },
-            {
-                rating: 4,
-            },
-            {
-                rating: 5,
-            },
-        ];
-    }
-
-    // Initialize stars with the passed in rating
-    updateStars(this.ratingValue);
-
-    // Watch for rating changes
-    $scope.$watch('vm.ratingValue', (newValue) => {
-        if (newValue) {
-            updateStars.call(this, newValue);
-        }
-    });
-
 
 
 
     /**
-     * Update rating stars
+     * Controller
      */
-    function updateStars(currentRating) {
+    function StarRatingController(
+        $scope
+    ) {
 
-        this.ratings.forEach((rating) => {
-            if (rating.rating && rating.rating <= parseInt(currentRating, 10)) {
-                rating.checked = true;
-            } else {
-                rating.checked = false;
+        // If no ratings were passed in, build a default array
+        if (!this.ratings) {
+            this.ratings = [
+                {
+                    rating: 1,
+                },
+                {
+                    rating: 2,
+                },
+                {
+                    rating: 3,
+                },
+                {
+                    rating: 4,
+                },
+                {
+                    rating: 5,
+                },
+            ];
+        }
+
+        // Initialize stars with the passed in rating
+        updateStars(this.ratingValue);
+
+        // Watch for rating changes
+        $scope.$watch('vm.ratingValue', (newValue) => {
+            if (newValue) {
+                updateStars.call(this, newValue);
             }
         });
 
-    }
 
+
+
+        /**
+         * Update rating stars
+         */
+        function updateStars(currentRating) {
+
+            this.ratings.forEach((rating) => {
+                if (rating.rating && rating.rating <= parseInt(currentRating, 10)) {
+                    rating.checked = true;
+                } else {
+                    rating.checked = false;
+                }
+            });
+
+        }
+
+
+    }
 
 }
 

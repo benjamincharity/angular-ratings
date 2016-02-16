@@ -17,8 +17,8 @@
     ],
     "license": "MIT",
     "main": [
-        "dist/angular-ratings.min.js",
-        "dist/angular-ratings.min.css"
+        "dist/angular-ratings.js",
+        "dist/angular-ratings.css"
     ],
     "dependencies": {
         "angular": "~1.4.0"

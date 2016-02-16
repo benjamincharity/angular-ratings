@@ -1,4 +1,5 @@
 /* global require */
+
 export function AngularRatingsDirective(
 ) {
     'ngInject';

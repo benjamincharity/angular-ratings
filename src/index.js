@@ -1,6 +1,6 @@
 import { AngularRatingsDirective } from './angularRatings.directive.js';
 
-angular.module('angular-ratings', [])
-    .directive('bpcAngularRatings', AngularRatingsDirective)
+angular.module('bc.AngularRatings', [])
+    .directive('bcAngularRatings', AngularRatingsDirective)
 ;
 

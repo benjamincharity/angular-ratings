@@ -27,16 +27,32 @@ var config = {
     module: {
         loaders: [
             {
-                test: /(\.jsx|\.js)$/,
+                test: /\.js$/,
                 loader: 'babel',
-                exclude: /(node_modules|bower_components)/
+                exclude: /(node_modules|bower_components)/,
+                query: {
+                    presets: [
+                        'es2015'
+                    ]
+                }
             },
             {
                 test: /(\.jsx|\.js)$/,
-                loader: "eslint-loader",
+                loader: 'eslint-loader',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.html$/,
+                loader: 'ng-cache?module=bc.AngularRatingsTemplates?prefix=./src'
+            },
+            {
+                test: /\.scss$/,
+                loaders: ['style', 'css', 'sass']
             }
-        ]
+        ],
+        sassLoader: {
+            includePaths: [path.resolve(__dirname, './src')]
+        }
     },
     resolve: {
         root: path.resolve('./src'),

@@ -1,6 +1,6 @@
 {
-    "name": "angular.ratings",
-    "homepage": "https://github.com/benjamincharity/angular.ratings",
+    "name": "angular-ratings",
+    "homepage": "https://github.com/benjamincharity/angular-ratings",
     "authors": [
         "Benjamin Charity <ben@benjamincharity.com>"
     ],
@@ -26,10 +26,13 @@
     "ignore": [
         "**/.*",
         "src",
+        "bin",
         "node_modules",
         "package.json",
         "webpack.config.js",
-        "gulpfile.js"
+        "gulpfile.js",
+        ".eslintignore",
+        ".eslintrc"
     ]
 }
 

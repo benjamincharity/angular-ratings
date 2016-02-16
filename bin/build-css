@@ -1,0 +1,1 @@
+node-sass --include-path scss src/angular-ratings.scss dist/angular-ratings.css

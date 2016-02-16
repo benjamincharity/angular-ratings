@@ -19,15 +19,15 @@
     "html-loader": "^0.4.2",
     "loader-utils": "^0.2.12",
     "minifier": "^0.7.1",
-    "node-sass": "^3.4.2",
-    "nodemon": "^1.8.1",
+    "npm-html2js": "^0.1.8",
     "source-map": "^0.5.3"
   },
   "scripts": {
-    "build": "./bin/build-app",
-    "watch": "./bin/watch-app",
+    "build": "npm run build:html & WEBPACK_ENV=build webpack",
+    "watch": "WEBPACK_ENV=dev webpack --progress --colors --watch",
     "build-css": "./bin/build-css",
-    "watch-css": "./bin/watch-css"
+    "watch-css": "./bin/watch-css",
+    "build:html": "npm-html2js -i 'src/*.html' -o 'dist/starsTemplate.js' -m 'bc.AngularRatings' -b 'src' --minify"
   },
   "repository": {
     "type": "git",

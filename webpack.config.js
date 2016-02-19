@@ -5,60 +5,53 @@ var path = require('path');
 
 var libraryName = 'angular-ratings';
 
-var plugins = [], outputFile;
-
-if (env === 'build') {
-    plugins.push(new UglifyJsPlugin({ minimize: true }));
-    outputFile = libraryName + '.min.js';
-} else {
-    outputFile = libraryName + '.js';
-}
 
 var config = {
-    entry: __dirname + '/src/index.js',
+    entry: {
+        "angular-ratings": "./src/index.js",
+        "angular-ratings.min": "./src/index.js",
+    },
     devtool: 'source-map',
     output: {
         path: __dirname + '/dist',
-        filename: outputFile,
+        filename: "[name].js",
         library: libraryName,
         libraryTarget: 'umd',
         umdNamedDefine: true
     },
     module: {
+        preLoaders: [
+            {
+                test: /\.js$/,
+                loader: 'eslint-loader',
+                exclude: /node_modules/
+            }
+        ],
         loaders: [
             {
                 test: /\.js$/,
-                loader: 'babel',
-                exclude: /(node_modules|bower_components)/,
-                query: {
-                    presets: [
-                        'es2015'
-                    ]
-                }
-            },
-            {
-                test: /(\.jsx|\.js)$/,
-                loader: 'eslint-loader',
-                exclude: /node_modules/
+                loaders: [
+                    'ng-annotate',
+                    'babel?presets[]=es2015'
+                ],
+                exclude: /bower_components/
             },
             {
                 test: /\.html$/,
-                loader: 'ng-cache?module=bc.AngularRatingsTemplates?prefix=./src'
-            },
-            {
-                test: /\.scss$/,
-                loaders: ['style', 'css', 'sass']
+                loader: 'ngtemplate!html'
             }
-        ],
-        sassLoader: {
-            includePaths: [path.resolve(__dirname, './src')]
-        }
+        ]
     },
     resolve: {
         root: path.resolve('./src'),
         extensions: ['', '.js']
     },
-    plugins: plugins
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            include: /\.min\.js$/,
+            minimize: true
+        })
+    ]
 };
 
 module.exports = config;

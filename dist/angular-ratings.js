@@ -70,11 +70,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	exports.AngularRatingsDirective = AngularRatingsDirective;
-	/* global require */
+	
+	var _template = __webpack_require__(2);
+	
+	var _template2 = _interopRequireDefault(_template);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function AngularRatingsDirective() {
-	    'ngInject';
 	
+	    linkFunction.$inject = ["$scope", "$element"];
+	    StarRatingController.$inject = ["$scope"];
 	    var directive = {
 	        restrict: 'E',
 	        replace: true,
@@ -84,7 +90,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            ratings: '=?',
 	            readOnly: '=?'
 	        },
-	        templateUrl: __webpack_require__(2),
+	        templateUrl: _template2.default,
 	        link: linkFunction,
 	        controller: StarRatingController,
 	        controllerAs: 'vm'
@@ -96,6 +102,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Link
 	     */
 	    function linkFunction($scope, $element) {
+	        'ngInject';
 	
 	        if ($scope.readOnly) {
 	            $element.addClass('stars--disabled');
@@ -106,7 +113,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Controller
 	     */
 	    function StarRatingController($scope) {
-	        var _this = this;
+	        'ngInject';
+	
+	        var self = this;
 	
 	        // If no ratings were passed in, build a default array
 	        if (!this.ratings) {
@@ -129,7 +138,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Watch for rating changes
 	        $scope.$watch('vm.ratingValue', function (newValue) {
 	            if (newValue) {
-	                updateStars.call(_this, newValue);
+	
+	                // NOTE: I was using `updateStars.call(this, newValue)` in order to continue using
+	                // `this` without an alias. When Webpack/Babel converts to ES5 it seems to miss the
+	                // reference to this inside `updateStars` - `this.ratings.forEach...` so an error
+	                // `Cannot read property 'ratings' of undefined` was being thrown.
+	                updateStars(newValue);
 	            }
 	        });
 	
@@ -138,7 +152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         */
 	        function updateStars(currentRating) {
 	
-	            this.ratings.forEach(function (rating) {
+	            self.ratings.forEach(function (rating) {
 	                if (rating.rating && rating.rating <= parseInt(currentRating, 10)) {
 	                    rating.checked = true;
 	                } else {
@@ -147,18 +161,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	        }
 	    }
-	}
+	} /* global require */
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
-	var angular=window.angular,ngModule;
-	try {ngModule=angular.module(["bc.AngularRatingsTemplates?prefix=./src"])}
-	catch(e){ngModule=angular.module("bc.AngularRatingsTemplates?prefix=./src",[])}
-	var v1="<div class=\"bpc-stars\" data-ng-class=\"{ 'stars--disabled': vm.readOnly }\"> <div class=\"bpc-stars__star\" data-ng-repeat=\"rating in vm.ratings track by $index\" data-ng-click=\"vm.ratingValue = rating.rating\"> <span class=\"bpc-stars__star-icon\" data-ng-class=\"rating.checked ? 'ion-ios-star' : 'ion-ios-star-outline'\"></span> </div> </div>";
-	ngModule.run(["$templateCache",function(c){c.put("stars.html",v1)}]);
-	module.exports=v1;
+	var path = '/Users/bc/Code/open-source/angular-ratings/src/template.html';
+	var html = "<div class=bpc-stars data-ng-class=\"{ 'stars--disabled': vm.readOnly }\"> <div class=bpc-stars__star data-ng-repeat=\"rating in vm.ratings track by $index\" data-ng-click=\"vm.ratingValue = rating.rating\"> <span class=bpc-stars__star-icon data-ng-class=\"rating.checked ? 'ion-ios-star' : 'ion-ios-star-outline'\"></span> </div> </div>";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
 
 /***/ }
 /******/ ])

@@ -19,16 +19,9 @@ export class RatingsController {
     _activate() {
         // Expose some items to the dom
         this.starTemplate = this.AngularRatingsConfig.starTemplate;
-        this.selectedClass = this.AngularRatingsConfig.selectedClass;
-        this.unselectedClass = this.AngularRatingsConfig.unselectedClass;
-
-        // If no ratings were passed in, build a default array
-        if (!this.bcRatings) {
-            this.bcRatings = this.AngularRatingsConfig.ratings;
-        }
-
-        // Initialize stars with the passed in rating
-        this.updateStars(this.bcRatingValue);
+        this.selectedClass = this.bcSelectedClass || this.AngularRatingsConfig.selectedClass;
+        this.unselectedClass = this.bcUnselectedClass || this.AngularRatingsConfig.unselectedClass;
+        this.ratings = this.bcRatings || this.AngularRatingsConfig.ratings;
 
         // Watch for rating changes
         this.$scope.$watch('vm.bcRatingValue', (newValue) => {
@@ -36,6 +29,9 @@ export class RatingsController {
                 this.updateStars(newValue);
             }
         });
+
+        // Initialize stars with the passed in rating
+        this.updateStars(this.bcRatingValue);
 
     }
 
@@ -46,7 +42,7 @@ export class RatingsController {
     updateStars(currentRating) {
 
         // Loop through the ratings
-        this.bcRatings.forEach((rating) => {
+        this.ratings.forEach((rating) => {
 
             // If this rating is equal or less than the current rating, marked it checked
             if (rating.rating && rating.rating <= parseInt(currentRating, 10)) {

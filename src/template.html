@@ -2,7 +2,7 @@
 
   <div
     class="bpc-stars__star"
-    data-ng-repeat="rating in ::vm.bcRatings track by $index"
+    data-ng-repeat="rating in ::vm.ratings track by $index"
     data-ng-click="vm.bcRatingValue = rating.rating"
   >
     <ng-include src="vm.starTemplate"></ng-include>

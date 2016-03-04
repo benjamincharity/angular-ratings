@@ -1,15 +1,11 @@
-<div class="bpc-stars" data-ng-class="{ 'stars--disabled': vm.readOnly }" >
+<div class="bpc-stars" data-ng-class="{ 'stars--disabled': vm.bcReadOnly }" >
 
   <div
     class="bpc-stars__star"
-    data-ng-repeat="rating in vm.ratings track by $index"
-    data-ng-click="vm.ratingValue = rating.rating"
+    data-ng-repeat="rating in ::vm.bcRatings track by $index"
+    data-ng-click="vm.bcRatingValue = rating.rating"
   >
-    <span
-      class="bpc-stars__star-icon"
-      data-ng-class="rating.checked ? 'ion-ios-star' : 'ion-ios-star-outline'"
-    ></span>
-
+    <ng-include src="vm.starTemplate"></ng-include>
   </div>
 
 </div>

@@ -9,32 +9,16 @@ export function AngularRatingsDirective() {
         replace: true,
         scope: {},
         bindToController: {
-            ratingValue: '=',
-            ratings: '=?',
-            readOnly: '=?',
+            bcRatingValue: '=',
+            bcRatings: '=?',
+            bcReadOnly: '=?',
         },
         templateUrl: template,
-        link: linkFunction,
         controller: RatingsController,
         controllerAs: 'vm',
     };
 
     return directive;
-
-
-    /*
-     * Link
-     */
-    function linkFunction($scope, $element, $attrs, $ctrl) {
-        'ngInject';
-
-        console.log('in link');
-
-        if ($ctrl.readOnly) {
-            $element.addClass('stars--disabled');
-        }
-
-    }
 
 
 }

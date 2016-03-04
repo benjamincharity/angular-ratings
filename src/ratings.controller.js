@@ -1,79 +1,57 @@
 export class RatingsController {
 
     constructor(
-        $scope
+        $scope,
+        AngularRatingsConfig
     ) {
         'ngInject';
 
         this.$scope = $scope;
+        this.AngularRatingsConfig = AngularRatingsConfig;
 
 
         this._activate();
-
     }
 
 
 
 
     _activate() {
-        const self = this;
-
-        console.log('in activate');
+        this.starTemplate = this.AngularRatingsConfig.starTemplate;
 
         // If no ratings were passed in, build a default array
-        if (!this.ratings) {
-            this.ratings = [
-                {
-                    rating: 1,
-                },
-                {
-                    rating: 2,
-                },
-                {
-                    rating: 3,
-                },
-                {
-                    rating: 4,
-                },
-                {
-                    rating: 5,
-                },
-            ];
+        if (!this.bcRatings) {
+            this.bcRatings = this.AngularRatingsConfig.ratings;
         }
 
         // Initialize stars with the passed in rating
-        updateStars(this.ratingValue);
+        this.updateStars(this.bcRatingValue);
 
         // Watch for rating changes
-        this.$scope.$watch('vm.ratingValue', (newValue) => {
+        this.$scope.$watch('vm.bcRatingValue', (newValue) => {
             if (newValue) {
-
-                // NOTE: I was using `updateStars.call(this, newValue)` in order to continue using
-                // `this` without an alias. When Webpack/Babel converts to ES5 it seems to miss the
-                // reference to this inside `updateStars` - `this.ratings.forEach...` so an error
-                // `Cannot read property 'ratings' of undefined` was being thrown.
-                updateStars(newValue);
+                this.updateStars(newValue);
             }
         });
 
+    }
 
 
+    /**
+     * Update rating stars
+     */
+    updateStars(currentRating) {
 
-        /**
-         * Update rating stars
-         */
-        function updateStars(currentRating) {
+        // Loop through the ratings
+        this.bcRatings.forEach((rating) => {
 
-            self.ratings.forEach((rating) => {
-                if (rating.rating && rating.rating <= parseInt(currentRating, 10)) {
-                    rating.checked = true;
-                } else {
-                    rating.checked = false;
-                }
-            });
-
-        }
-
+            // If this rating is equal or less than the current rating, marked it checked
+            if (rating.rating && rating.rating <= parseInt(currentRating, 10)) {
+                rating.checked = true;
+            } else {
+                rating.checked = false;
+            }
+        });
 
     }
 

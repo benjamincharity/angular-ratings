@@ -17,7 +17,10 @@ export class RatingsController {
 
 
     _activate() {
+        // Expose some items to the dom
         this.starTemplate = this.AngularRatingsConfig.starTemplate;
+        this.selectedClass = this.AngularRatingsConfig.selectedClass;
+        this.unselectedClass = this.AngularRatingsConfig.unselectedClass;
 
         // If no ratings were passed in, build a default array
         if (!this.bcRatings) {

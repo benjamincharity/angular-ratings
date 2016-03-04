@@ -9,6 +9,9 @@ export class RatingsConfigProvider {
         // This should be an HTML template string
         this.starTemplate = stars;
 
+        this.selectedClass = 'ion-ios-star';
+        this.unselectedClass = 'ion-ios-star-outline';
+
         // Define the type of value that the directive should expose
         // Possible values:
         //   'integer' => 7

@@ -1,49 +1,24 @@
-/* global require */
-import template from './template.html';
+export class RatingsController {
 
-export function AngularRatingsDirective() {
-
-    const directive = {
-        restrict: 'E',
-        replace: true,
-        scope: {},
-        bindToController: {
-            ratingValue: '=',
-            ratings: '=?',
-            readOnly: '=?',
-        },
-        templateUrl: template,
-        link: linkFunction,
-        controller: StarRatingController,
-        controllerAs: 'vm',
-    };
-
-    return directive;
-
-
-    /*
-     * Link
-     */
-    function linkFunction($scope, $element) {
+    constructor(
+        $scope
+    ) {
         'ngInject';
 
-        if ($scope.readOnly) {
-            $element.addClass('stars--disabled');
-        }
+        this.$scope = $scope;
+
+
+        this._activate();
 
     }
 
 
 
 
-    /**
-     * Controller
-     */
-    function StarRatingController(
-        $scope
-    ) {
-        'ngInject';
+    _activate() {
         const self = this;
+
+        console.log('in activate');
 
         // If no ratings were passed in, build a default array
         if (!this.ratings) {
@@ -70,7 +45,7 @@ export function AngularRatingsDirective() {
         updateStars(this.ratingValue);
 
         // Watch for rating changes
-        $scope.$watch('vm.ratingValue', (newValue) => {
+        this.$scope.$watch('vm.ratingValue', (newValue) => {
             if (newValue) {
 
                 // NOTE: I was using `updateStars.call(this, newValue)` in order to continue using

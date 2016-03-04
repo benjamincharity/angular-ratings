@@ -8,8 +8,8 @@ var libraryName = 'angular-ratings';
 
 var config = {
     entry: {
-        "angular-ratings": "./src/index.js",
-        "angular-ratings.min": "./src/index.js",
+        'angular-ratings': './src/index.js',
+        'angular-ratings.min': './src/index.js',
     },
     devtool: 'source-map',
     output: {

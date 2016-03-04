@@ -5,7 +5,19 @@ export class RatingsConfigProvider {
     constructor() {
         // Define defaults
         this.readOnly = true;
+
+        // This should be an HTML template string
         this.starTemplate = stars;
+
+        // Define the type of value that the directive should expose
+        // Possible values:
+        //   'integer' => 7
+        //   'decimal' => 7.3
+        //   'percent' => 73
+        this.valueType = 'integer';
+
+        // This should be an array of objects. We need the object so that we can add/remove the
+        // 'checked' flag
         this.ratings = [
             {
                 rating: 1,

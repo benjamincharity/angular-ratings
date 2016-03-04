@@ -6,6 +6,23 @@ export class RatingsConfigProvider {
         // Define defaults
         this.readOnly = true;
         this.starTemplate = stars;
+        this.ratings = [
+            {
+                rating: 1,
+            },
+            {
+                rating: 2,
+            },
+            {
+                rating: 3,
+            },
+            {
+                rating: 4,
+            },
+            {
+                rating: 5,
+            },
+        ];
     }
 
 

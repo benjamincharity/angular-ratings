@@ -1,4 +1,4 @@
-import stars from './template.star.html';
+import star from './template.star.html';
 
 export class RatingsConfigProvider {
 
@@ -7,7 +7,7 @@ export class RatingsConfigProvider {
         this.readOnly = true;
 
         // This should be an HTML template string
-        this.starTemplate = stars;
+        this.starTemplate = star;
 
         this.selectedClass = 'ion-ios-star';
         this.unselectedClass = 'ion-ios-star-outline';

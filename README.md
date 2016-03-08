@@ -1,6 +1,6 @@
 ## Angular Ratings
 
-[Demo](_URL_)
+[Demo MISSING](_URL_)
 
 
 ## Installation

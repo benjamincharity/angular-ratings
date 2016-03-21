@@ -56,12 +56,82 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var _angularRatingsDirective = __webpack_require__(1);
+	var _ratings = __webpack_require__(1);
 	
-	angular.module('bc.AngularRatings', []).directive('bcAngularRatings', _angularRatingsDirective.AngularRatingsDirective);
+	var _ratingsDirective = __webpack_require__(3);
+	
+	angular.module('bc.AngularRatings', []).provider('AngularRatingsConfig', _ratings.RatingsConfigProvider).directive('bcAngularRatings', _ratingsDirective.AngularRatingsDirective);
 
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.RatingsConfigProvider = undefined;
+	
+	var _templateStar = __webpack_require__(2);
+	
+	var _templateStar2 = _interopRequireDefault(_templateStar);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var RatingsConfigProvider = exports.RatingsConfigProvider = function () {
+	    function RatingsConfigProvider() {
+	        _classCallCheck(this, RatingsConfigProvider);
+	
+	        // Define defaults
+	        this.readOnly = true;
+	
+	        // This should be an HTML template string
+	        this.starTemplate = _templateStar2.default;
+	
+	        this.selectedClass = 'ion-ios-star';
+	        this.unselectedClass = 'ion-ios-star-outline';
+	
+	        // This should be an array of objects. We need the object so that we can add/remove the
+	        // 'checked' flag
+	        this.ratings = [{
+	            rating: 1
+	        }, {
+	            rating: 2
+	        }, {
+	            rating: 3
+	        }, {
+	            rating: 4
+	        }, {
+	            rating: 5
+	        }];
+	    }
+	
+	    _createClass(RatingsConfigProvider, [{
+	        key: '$get',
+	        value: function $get() {
+	            return this;
+	        }
+	    }]);
+	
+	    return RatingsConfigProvider;
+	}();
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	var path = '/Users/bc/Code/open-source/angular-ratings/src/template.star.html';
+	var html = "<span class=bpc-stars__star-icon data-ng-class=\"rating.checked ? vm.selectedClass : vm.unselectedClass\"></span>";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -71,88 +141,95 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.AngularRatingsDirective = AngularRatingsDirective;
 	
-	var _template = __webpack_require__(2);
+	var _ratings = __webpack_require__(4);
+	
+	var _template = __webpack_require__(5);
 	
 	var _template2 = _interopRequireDefault(_template);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	/* global require */
 	function AngularRatingsDirective() {
 	
-	    linkFunction.$inject = ["$scope", "$element"];
-	    StarRatingController.$inject = ["$scope"];
 	    var directive = {
 	        restrict: 'E',
 	        replace: true,
 	        scope: {},
 	        bindToController: {
-	            ratingValue: '=',
-	            ratings: '=?',
-	            readOnly: '=?'
+	            bcRatingValue: '=',
+	            bcRatings: '=?',
+	            bcReadOnly: '=?'
 	        },
 	        templateUrl: _template2.default,
-	        link: linkFunction,
-	        controller: StarRatingController,
+	        controller: _ratings.RatingsController,
 	        controllerAs: 'vm'
 	    };
 	
 	    return directive;
+	}
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	'use strict';
 	
-	    /*
-	     * Link
-	     */
-	    function linkFunction($scope, $element) {
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var RatingsController = exports.RatingsController = function () {
+	    RatingsController.$inject = ["$scope", "AngularRatingsConfig"];
+	    function RatingsController($scope, AngularRatingsConfig) {
 	        'ngInject';
 	
-	        if ($scope.readOnly) {
-	            $element.addClass('stars--disabled');
-	        }
+	        _classCallCheck(this, RatingsController);
+	
+	        this.$scope = $scope;
+	        this.AngularRatingsConfig = AngularRatingsConfig;
+	
+	        this._activate();
 	    }
 	
-	    /**
-	     * Controller
-	     */
-	    function StarRatingController($scope) {
-	        'ngInject';
+	    _createClass(RatingsController, [{
+	        key: '_activate',
+	        value: function _activate() {
+	            var _this = this;
 	
-	        var self = this;
+	            // Expose some items to the dom
+	            this.starTemplate = this.AngularRatingsConfig.starTemplate;
+	            this.selectedClass = this.bcSelectedClass || this.AngularRatingsConfig.selectedClass;
+	            this.unselectedClass = this.bcUnselectedClass || this.AngularRatingsConfig.unselectedClass;
+	            this.ratings = this.bcRatings || this.AngularRatingsConfig.ratings;
 	
-	        // If no ratings were passed in, build a default array
-	        if (!this.ratings) {
-	            this.ratings = [{
-	                rating: 1
-	            }, {
-	                rating: 2
-	            }, {
-	                rating: 3
-	            }, {
-	                rating: 4
-	            }, {
-	                rating: 5
-	            }];
+	            // Watch for rating changes
+	            this.$scope.$watch('vm.bcRatingValue', function (newValue) {
+	                if (newValue) {
+	                    _this.updateStars(newValue);
+	                }
+	            });
+	
+	            // Initialize stars with the passed in rating
+	            this.updateStars(this.bcRatingValue);
 	        }
-	
-	        // Initialize stars with the passed in rating
-	        updateStars(this.ratingValue);
-	
-	        // Watch for rating changes
-	        $scope.$watch('vm.ratingValue', function (newValue) {
-	            if (newValue) {
-	
-	                // NOTE: I was using `updateStars.call(this, newValue)` in order to continue using
-	                // `this` without an alias. When Webpack/Babel converts to ES5 it seems to miss the
-	                // reference to this inside `updateStars` - `this.ratings.forEach...` so an error
-	                // `Cannot read property 'ratings' of undefined` was being thrown.
-	                updateStars(newValue);
-	            }
-	        });
 	
 	        /**
 	         * Update rating stars
 	         */
-	        function updateStars(currentRating) {
 	
-	            self.ratings.forEach(function (rating) {
+	    }, {
+	        key: 'updateStars',
+	        value: function updateStars(currentRating) {
+	
+	            // Loop through the ratings
+	            this.ratings.forEach(function (rating) {
+	
+	                // If this rating is equal or less than the current rating, marked it checked
 	                if (rating.rating && rating.rating <= parseInt(currentRating, 10)) {
 	                    rating.checked = true;
 	                } else {
@@ -160,15 +237,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            });
 	        }
-	    }
-	} /* global require */
+	    }]);
+	
+	    return RatingsController;
+	}();
 
 /***/ },
-/* 2 */
+/* 5 */
 /***/ function(module, exports) {
 
 	var path = '/Users/bc/Code/open-source/angular-ratings/src/template.html';
-	var html = "<div class=bpc-stars data-ng-class=\"{ 'stars--disabled': vm.readOnly }\"> <div class=bpc-stars__star data-ng-repeat=\"rating in vm.ratings track by $index\" data-ng-click=\"vm.ratingValue = rating.rating\"> <span class=bpc-stars__star-icon data-ng-class=\"rating.checked ? 'ion-ios-star' : 'ion-ios-star-outline'\"></span> </div> </div>";
+	var html = "<div class=bpc-stars data-ng-class=\"{ 'bpc-stars--disabled': vm.bcReadOnly }\"> <div class=bpc-stars__star data-ng-repeat=\"rating in ::vm.ratings track by $index\" data-ng-click=\"vm.bcRatingValue = rating.rating\"> <ng-include src=vm.starTemplate></ng-include> </div> </div>";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 

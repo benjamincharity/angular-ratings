@@ -12,13 +12,6 @@ export class RatingsConfigProvider {
         this.selectedClass = 'ion-ios-star';
         this.unselectedClass = 'ion-ios-star-outline';
 
-        // Define the type of value that the directive should expose
-        // Possible values:
-        //   'integer' => 7
-        //   'decimal' => 7.3
-        //   'percent' => 73
-        this.valueType = 'integer';
-
         // This should be an array of objects. We need the object so that we can add/remove the
         // 'checked' flag
         this.ratings = [

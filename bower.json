@@ -1,5 +1,4 @@
 {
-    "version": "1.0.0",
     "name": "angular-ratings",
     "description": "A simple Angular directive to view or submit ratings.",
     "homepage": "https://github.com/benjamincharity/angular-ratings",

@@ -7,6 +7,7 @@
 
 ```
 $ bower install angular-ratings --save
+$ npm install angular-ratings --save
 ```
 
 Or
